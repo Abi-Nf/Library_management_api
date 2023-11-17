@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DatabaseConnection {
+public class DbConnect {
 
     public static Connection connect(){
         String url = System.getenv("PSQL_URL");
