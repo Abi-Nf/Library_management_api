@@ -6,7 +6,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Guest extends User {
+public class Subscribers extends User {
     private String reference;
     private String password;
 }
