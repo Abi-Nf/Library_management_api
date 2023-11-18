@@ -43,6 +43,11 @@ public class SubscribersCrudOperations implements CrudOperations<Subscribers> {
         return statement.executeQuery();
     }
 
+    private ResultSet statementFinding(String sql) throws SQLException {
+        assert this.connection != null;
+        PreparedStatement statement = this.connection.prepareStatement(sql);
+        return statement.executeQuery();
+    }
 
     @Override
     public Subscribers save(Subscribers value) {
