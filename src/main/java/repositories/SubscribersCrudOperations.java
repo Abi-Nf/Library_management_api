@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SubscribersCrudOperations implements CrudOperations<Subscribers> {
@@ -51,12 +52,27 @@ public class SubscribersCrudOperations implements CrudOperations<Subscribers> {
 
     @Override
     public Subscribers save(Subscribers value) {
+        String sql = """
+                insert into "subscribers" (name) values (?)
+                """;
+        try {
+            assert this.connection != null;
+            PreparedStatement statement = this.connection.prepareStatement(sql);
+            statement.setString(1, value.getName());
+
+            boolean isInserted = statement.executeUpdate() == 1;
+            if(isInserted) return this.find(value);
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
         return null;
     }
 
     @Override
     public List<Subscribers> saveAll(List<Subscribers> values) {
-        return null;
+        List<Subscribers> subscribers = new ArrayList<>();
+        for (Subscribers value : values) subscribers.add(this.save(value));
+        return subscribers;
     }
 
     @Override
