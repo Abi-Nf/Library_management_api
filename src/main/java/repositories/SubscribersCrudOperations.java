@@ -1,12 +1,16 @@
 package repositories;
 
+import configurations.DbConnect;
 import models.Subscribers;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
 public class SubscribersCrudOperations implements CrudOperations<Subscribers> {
+    private final Connection connection = DbConnect.connect();
 
     private Subscribers parseSubscriber(ResultSet results) throws SQLException {
         Subscribers subscribers = new Subscribers();
@@ -14,6 +18,29 @@ public class SubscribersCrudOperations implements CrudOperations<Subscribers> {
         subscribers.setName(results.getString("name"));
         subscribers.setReference(results.getString("reference"));
         return subscribers;
+    }
+
+    private Subscribers find(Subscribers subscribers){
+        String sql = """
+                select id, name, reference from "subscribers"
+                where name = ? and reference = ?
+                """;
+
+        try {
+            ResultSet results = this.statementFinding(sql, subscribers);;
+            if(results.next()) return this.parseSubscriber(results);
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
+    private ResultSet statementFinding(String sql, Subscribers subscribers) throws SQLException {
+        assert this.connection != null;
+        PreparedStatement statement = this.connection.prepareStatement(sql);
+        statement.setString(1, subscribers.getName());
+        statement.setString(2, String.valueOf(subscribers.getReference()));
+        return statement.executeQuery();
     }
 
 
