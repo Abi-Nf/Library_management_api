@@ -77,11 +77,36 @@ public class SubscribersCrudOperations implements CrudOperations<Subscribers> {
 
     @Override
     public List<Subscribers> findAll() {
-        return null;
+        List<Subscribers> subscribers = new ArrayList<>();
+        String sql = "select from \"subscribers\"";
+
+        try {
+            ResultSet result = this.statementFinding(sql);
+            while(result.next()) subscribers.add(
+                    this.parseSubscriber(result)
+            );
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return subscribers;
     }
 
     @Override
     public Subscribers delete(Subscribers value) {
+        Subscribers toDelete = this.find(value);
+        String sql = """
+                delete from "subscribers" where name = ?
+                """;
+        try {
+            assert this.connection != null;
+            PreparedStatement statement = this.connection.prepareStatement(sql);
+            statement.setString(1, value.getName());
+
+            boolean isDeleted = statement.executeUpdate() == 1;
+            if(isDeleted) return toDelete;
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
         return null;
     }
 }
