@@ -3,8 +3,8 @@ drop table if exists "subscribers";
 create table "subscribers" (
     id serial primary key,
     reference text unique default gen_random_uuid(),
-    userId int references "user"(id)
+    name varchar(255)
 );
 
-insert into "subscribers" (userId)
-values (2), (3), (4);
+insert into "subscribers" (name)
+values ('John Doe'), ('Sarah');
