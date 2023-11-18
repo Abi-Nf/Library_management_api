@@ -24,7 +24,7 @@ public class SubscribersCrudOperations implements CrudOperations<Subscribers> {
     private Subscribers find(Subscribers subscribers){
         String sql = """
                 select id, name, reference from "subscribers"
-                where name = ? and reference = ?
+                where name = ?
                 """;
 
         try {
