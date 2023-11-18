@@ -3,9 +3,9 @@ drop table if exists "admin";
 create table if not exists "admin" (
     id serial primary key,
     email varchar(255) not null,
-    userId int references "user"(id)
+    name varchar(255)
 );
 
-insert into "admin" (email, userId)
-values ('john@gmail.com', 1),
-       ('sarah@gmail.com', 2);
+insert into "admin" (email, name)
+values ('john@gmail.com', 'John Doe'),
+       ('sarah@gmail.com', 'Sarah Mayer');
