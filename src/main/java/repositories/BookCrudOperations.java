@@ -1,10 +1,14 @@
 package repositories;
 
+import configurations.DbConnect;
 import models.Book;
 
+import java.sql.Connection;
 import java.util.List;
 
 public class BookCrudOperations implements CrudOperations<Book> {
+    private Connection connection = DbConnect.connect();
+
     @Override
     public Book save(Book value) {
         return null;
