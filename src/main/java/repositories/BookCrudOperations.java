@@ -16,7 +16,14 @@ public class BookCrudOperations implements CrudOperations<Book> {
         PreparedStatement statement = this.connection.prepareStatement(sql);
         statement.setString(1, book.getBookName());
         statement.setString(2, book.getTopic());
-        statement.setDate(3, Date.valueOf(book.getReleaseDate()));
+
+        if(book.getReleaseDate() != null){
+            Date date = Date.valueOf(book.getReleaseDate());
+            statement.setDate(3, date);
+        }else {
+            statement.setNull(3, Types.DATE);
+        }
+
         statement.setInt(4, book.getPageNumbers());
         return statement.executeQuery();
     }
@@ -131,7 +138,13 @@ public class BookCrudOperations implements CrudOperations<Book> {
             PreparedStatement statement = this.connection.prepareStatement(sql);
             statement.setString(1, value.getBookName());
             statement.setInt(2, value.getPageNumbers());
-            statement.setDate(4, Date.valueOf(value.getReleaseDate()));
+
+            if(value.getReleaseDate() != null){
+                Date date = Date.valueOf(value.getReleaseDate());
+                statement.setDate(3, date);
+            }else {
+                statement.setNull(3, Types.DATE);
+            }
 
             boolean isDeleted = statement.executeUpdate() == 1;
             if(isDeleted) return toBeDeleted;
