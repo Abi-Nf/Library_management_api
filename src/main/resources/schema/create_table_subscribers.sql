@@ -7,4 +7,4 @@ create table "subscribers" (
 );
 
 insert into "subscribers" (name)
-values ('John Doe'), ('Sarah');
+values ('John Doe'), ('Sarah'), ('Anonymous'), ('Thomas');
