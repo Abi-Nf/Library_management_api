@@ -1,7 +1,9 @@
 import models.Author;
 import models.Book;
+import models.Subscribers;
 import repositories.AuthorCrudOperations;
 import repositories.BookCrudOperations;
+import repositories.SubscribersCrudOperations;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -53,8 +55,21 @@ public class Main {
         System.out.println(deleted.getName());
     }
 
+    public static void subscribersTest(){
+        SubscribersCrudOperations operations = new SubscribersCrudOperations();
+
+        Subscribers subscriberTest = new Subscribers();
+        subscriberTest.setName("I am testing");
+
+        Subscribers saved = operations.save(subscriberTest);
+        System.out.println(saved.getId());
+        System.out.println(saved.getName());
+        System.out.println(saved.getReference());
+    }
+
     public static void main(String[] args) {
         bookTest();
         authorTest();
+        subscribersTest();
     }
 }
