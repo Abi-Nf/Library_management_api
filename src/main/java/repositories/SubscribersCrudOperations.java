@@ -40,7 +40,6 @@ public class SubscribersCrudOperations implements CrudOperations<Subscribers> {
         assert this.connection != null;
         PreparedStatement statement = this.connection.prepareStatement(sql);
         statement.setString(1, subscribers.getName());
-        statement.setString(2, String.valueOf(subscribers.getReference()));
         return statement.executeQuery();
     }
 
